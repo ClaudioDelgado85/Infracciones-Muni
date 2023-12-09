@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Artículos</title>
+    <style>
+        /* Estilos simples para mejorar la apariencia */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Consulta de Artículos</h1>
+
+    <label for="busqueda">Buscar:</label>
+    <input type="text" id="busqueda">
+    <button onclick="realizarBusqueda()">Buscar</button>
+
+    <ul id="resultados"></ul>
+
+    <script>
+       const articulos = [
+    { numero: "26.1", descripcion: "Será sancionado con multa de 50 UT el que entorpeciere, impidiere, obstaculizare o dificultare las facultades de control de los inspectores municipales.", sancion_ut: 50 },
+    { numero: "26.1.1", descripcion: "Si el hecho se ejecutare en una inspección con finalidad de control del cumplimiento de normas bromatológicas, seguridad o higiene, se procederá, además, a la clausura preventiva del local. El responsable no podrá ingresar al local clausurado sin previa autorización.", sancion_ut: null },
+    { numero: "26.1.2", descripcion: "Cuando del hecho resultare lesionado un funcionario municipal o policial, la multa se elevará a 150 UT, sin perjuicio de las acciones judiciales que pudieren corresponder.", sancion_ut: 150 },
+    { numero: "26.2", descripcion: "El que por cualquier medio violare una clausura o inhabilitación dispuesta, será sancionado con multa de 500 UT. Se considerará, salvo prueba en contrario, que la violación ocurrió el mismo día de imposición de la clausura y se reanudarán los plazos desde su reimposición.", sancion_ut: 500 },
+    { numero: "26.2.1", descripcion: "Cuando el hecho fuere realizado en un local destinado al comercio mayorista, la multa se incrementará a 1000 UT.", sancion_ut: 1000 },
+    { numero: "26.2.2", descripcion: "Cuando la violación ocurra en una clausura dispuesta por motivos bromatológicos, de higiene o seguridad, la multa se incrementará a 1200 UT.", sancion_ut: 1200 },
+    { numero: "26.2.3", descripcion: "En cualquiera de los casos descriptos anteriormente, si la violación de clausura se acompañare con un restablecimiento de las actividades u operaciones del establecimiento, la multa se incrementará en un cincuenta (50) por ciento.", sancion_ut: null },
+    { numero: "26.3", descripcion: "El que resistiere o no acatare una orden legítima del inspector o funcionario municipal, dada en oportunidad de una actuación por infracción y conforme la normativa vigente, será sancionado con multa de 100 UT. En la misma infracción incurrirá el que no cumpliere con las órdenes dadas a fin de hacer efectiva la clausura del establecimiento.", sancion_ut: 100 },
+    { numero: "27.1.1", descripcion: "Requisitos para circular vehículos automotores.", sancion_ut: null },
+    { numero: "27.1.1.1", descripcion: "Por carecer de licencia de conducir", sancion_ut: 200 },
+    { numero: "27.1.1.2", descripcion: "Por licencia de conducir vencida, caduca o inutilizada", sancion_ut: 150 },
+    { numero: "27.1.1.3", descripcion: "Por licencia de conducir inadecuada al vehículo conducido", sancion_ut: 150 },
+    { numero: "27.1.1.4", descripcion: "Por licencia de conducir falsificada o adulterada", sancion_ut: 250 },
+    { numero: "27.1.1.5", descripcion: "Por no portar la licencia de conducir", sancion_ut: 40 },
+    { numero: "27.1.1.6", descripcion: "Por carecer de pago de la Tasa de Usufructo de la Vía Pública", sancion_ut: 50 },
+    { numero: "27.1.1.7", descripcion: "Por carecer de seguro obligatorio vigente", sancion_ut: 200 },
+    { numero: "27.1.1.8", descripcion: "Por no portar comprobante de seguro obligatorio", sancion_ut: 40 },
+    { numero: "27.1.1.9", descripcion: "Por carecer de Revisión Técnica Obligatoria o estar vencida", sancion_ut: 100 },
+    { numero: "27.1.1.10", descripcion: "Por carecer de cédula de identificación del vehículo", sancion_ut: 100 },
+    { numero: "27.1.1.11", descripcion: "Por no portar la cédula de identificación del vehículo", sancion_ut: 40 },
+    { numero: "27.1.1.12", descripcion: "Por alteración o falsificación de los documentos, excepto licencia de conducir", sancion_ut: 200 },
+    { numero: "27.1.1.13", descripcion: "Por negarse a exhibir la documentación reglamentaria, igual sanción a la carencia de la documentación no exhibida.", sancion_ut: null },
+    { numero: "27.1.1.14", descripcion: "Por conducir sin la edad reglamentaria", sancion_ut: 250 },
+    { numero: "27.1.1.15", descripcion: "Por circular sin antejos, lentes de contactos, audífonos o dispositivos similares cuando la licencia indique su obligación de uso", sancion_ut: 50 },
+    { numero: "27.1.1.16", descripcion: "Por no utilizar cinturón de seguridad los ocupantes del vehículo", sancion_ut: 30 },
+    { numero: "27.1.1.17", descripcion: "Por conducir en estado de ebriedad o bajo los efectos de tóxicos o estupefacientes", sancion_ut: 500 },
+    { numero: "27.1.1.18", descripcion: "Por negarse a realizar las pruebas autorizadas para determinar grado de intoxicación alcohólica o por drogas", sancion_ut: 500 },
+];
+
+
+        function realizarBusqueda() {
+            const consulta = document.getElementById('busqueda').value.trim().toLowerCase();
+
+            if (consulta === '') {
+                // Si la búsqueda está vacía, ocultar la lista
+                mostrarResultados([]);
+            } else {
+                const resultados = articulos.filter(articulo =>
+                    articulo.descripcion.toLowerCase().includes(consulta)
+                );
+                mostrarResultados(resultados);
+            }
+        }
+
+        function mostrarResultados(resultados) {
+            const resultadosElement = document.getElementById('resultados');
+            resultadosElement.innerHTML = ''; // Limpiar resultados anteriores
+
+            if (resultados.length > 0) {
+                resultados.forEach(articulo => {
+                    const listItem = document.createElement('li');
+                    const sancion = articulo.sancion_ut !== null ? `, ${articulo.sancion_ut} UT` : '';
+                    listItem.textContent = `${articulo.numero} - ${articulo.descripcion}${sancion}`;
+                    resultadosElement.appendChild(listItem);
+                });
+            } else {
+                // Ocultar la lista si no hay resultados
+                resultadosElement.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

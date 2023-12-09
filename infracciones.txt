@@ -1,0 +1,9 @@
+27.1.1.1.Por carecer de licencia de conducir, 200 UT-
+27.1.1.2.Por licencia de conducir vencida, caduca o inutilizada, 150 UT-
+27.1.1.3.Por licencia de conducir inadecuada al vehículo conducido, 150 UT-
+27.1.1.4.Por licencia de conducir falsificada o adulterada, 250 UT-
+27.1.1.5.Por no portar la licencia de conducir, 40 UT-
+27.1.1.6.Por carecer de pago de la Tasa de Usufructo de la Vía Pública, 50 UT-
+27.1.1.7.Por carecer de seguro obligatorio vigente, 200 UT-
+27.1.1.8.Por no portar comprobante de seguro obligatorio, 40 UT-
+27.1.1.9.Por carecer de Revisión Técnica Obligatoria o estar vencida, 100 UT-

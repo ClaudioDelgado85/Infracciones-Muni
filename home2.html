@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Artículos</title>
+    <style>
+        /* Estilos simples para mejorar la apariencia */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Consulta de Artículos</h1>
+
+    <label for="busqueda">Buscar:</label>
+    <input type="text" id="busqueda">
+    <button onclick="realizarBusqueda()">Buscar</button>
+
+    <ul id="resultados"></ul>
+
+    <button onclick="abrirPDF()">Abrir PDF</button>
+
+    <script>
+        const articulos = [
+            { numero: "26.1", descripcion: "Será sancionado con multa de 50 UT el que entorpeciere, impidiere, obstaculizare o dificultare las facultades de control de los inspectores municipales.", sancion_ut: 50 },
+            { numero: "26.1.1", descripcion: "Si el hecho se ejecutare en una inspección con finalidad de control del cumplimiento de normas bromatológicas, seguridad o higiene, se procederá, además, a la clausura preventiva del local. El responsable no podrá ingresar al local clausurado sin previa autorización.", sancion_ut: null },
+            // ... otros artículos ...
+        ];
+
+        function realizarBusqueda() {
+            const consulta = document.getElementById('busqueda').value.trim().toLowerCase();
+
+            if (consulta === '') {
+                // Si la búsqueda está vacía, ocultar la lista
+                mostrarResultados([]);
+            } else {
+                const resultados = articulos.filter(articulo =>
+                    articulo.descripcion.toLowerCase().includes(consulta)
+                );
+                mostrarResultados(resultados);
+            }
+        }
+
+        function mostrarResultados(resultados) {
+            const resultadosElement = document.getElementById('resultados');
+            resultadosElement.innerHTML = ''; // Limpiar resultados anteriores
+
+            if (resultados.length > 0) {
+                resultados.forEach(articulo => {
+                    const listItem = document.createElement('li');
+                    const sancion = articulo.sancion_ut !== null ? `, ${articulo.sancion_ut} UT` : '';
+                    listItem.textContent = `${articulo.numero} - ${articulo.descripcion}${sancion}`;
+                    resultadosElement.appendChild(listItem);
+                });
+            } else {
+                // Ocultar la lista si no hay resultados
+                resultadosElement.style.display = 'none';
+            }
+        }
+
+        function abrirPDF() {
+            // Reemplaza "nombre_archivo.pdf" con el nombre de tu archivo PDF
+            window.open('Ordenanza_1010_2022.pdf', '_blank');
+        }
+    </script>
+</body>
+</html>
